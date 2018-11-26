@@ -19,7 +19,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content == ('<@' + client.user.id + '>'):
+    if message.content == ('<@' + str(client.user.id) + '>'):
         await sendMessage(message.channel, 'Current prefix is "' + PREFIX + '"')
         return
     if (message.content.startswith(PREFIX)) & (message.author.id != client.user.id):
@@ -32,7 +32,7 @@ async def on_message(message):
 
 
 async def sendMessage(channel, messageText):
-    await channel.typing()
+    await channel.trigger_typing()
     return await channel.send(messageText)
 
 
