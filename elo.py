@@ -11,6 +11,7 @@ matches = db.table('matches')
 
 
 def addUser(uID):
+    uID = str(uID)
     if len(users.search(where('uID') == uID)) != 0:
         return False
     else:
@@ -19,22 +20,28 @@ def addUser(uID):
 
 
 def getUserElo(uID):
-    if users.count(where('uID') == uID) != 1:
-        return
-    else:
-        userelo = users.get(where('uID') == uID)['elo']
-        return userelo
+    uID = str(uID)
+    count = users.count(where('uID') == uID)
+    if users.count(where('uID') == uID) < 1:
+        addUser(uID)
+    userelo = users.get(where('uID') == uID)['elo']
+    return userelo
 
 
 def setUserElo(uID, newElo):
+    uID = str(uID)
+    newElo = int(newElo)
     users.update(set('elo', newElo), where('uID') == uID)
 
 
 def getMatchCount(uID):
+    uID = str(uID)
     return matches.count(where('p1') == uID) + matches.count(where('p2') == uID)
 
 
 def addMatch(p1, p2, p1win):
+    p1 = str(p1)
+    p2 = str(p2)
     if len(users.search(where('uID') == p1)) != 1:
         return
     elif len(users.search(where('uID') == p2)) != 1:
@@ -44,7 +51,9 @@ def addMatch(p1, p2, p1win):
 
 
 def getWinProb (p1, p2):
-    if users.count(where('uID').matches(p1)) != 1 | users.count(where('uID').matches(p2)) != 1:
+    p1 = str(p1)
+    p2 = str(p2)
+    if (users.count(where('uID').matches(p1)) != 1) | (users.count(where('uID').matches(p2)) != 1):
         print('Something went wrong! Check database!')
         return
     p1elo = getUserElo(p1)
