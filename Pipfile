@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 tinydb = "*"
-discord = {git = "https://github.com/Rapptz/discord.py",ref = "rewrite"}
+discord-py = {editable = true,git = "https://github.com/Rapptz/discord.py",ref = "rewrite"}
 
 [requires]
 python_version = "3.7"
